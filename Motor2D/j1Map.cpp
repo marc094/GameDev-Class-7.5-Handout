@@ -39,9 +39,29 @@ void j1Map::PropagateBFS()
 {
 	// TODO 1: If frontier queue contains elements
 	// pop the last one and calculate its 4 neighbors
+	if (frontier.Count() > 0) {
+		iPoint node;
+		frontier.Pop(node);
+		p2List<iPoint> neighbours;
+		neighbours.add(iPoint(node.x, node.y + 1));
+		neighbours.add(iPoint(node.x, node.y - 1));
+		neighbours.add(iPoint(node.x + 1, node.y));
+		neighbours.add(iPoint(node.x - 1, node.y));
 
-	// TODO 2: For each neighbor, if not visited, add it
-	// to the frontier queue and visited list
+
+		// TODO 2: For each neighbor, if not visited, add it
+		// to the frontier queue and visited list
+		p2List_item<iPoint>* visited_node;
+		p2List_item<iPoint>* neighbour;
+		for (neighbour = neighbours.start; neighbour != nullptr; neighbour = neighbour->next) {
+			bool exists = false;
+			for (visited_node = visited.start; visited_node != nullptr && !exists; visited_node = visited_node->next) {
+				if (visited_node->data == neighbour->data)
+					exists = true;
+			}
+			if (!exists) frontier.Push(neighbour->data);
+		}
+	}
 }
 
 void j1Map::DrawBFS()
@@ -82,6 +102,9 @@ bool j1Map::IsWalkable(int x, int y) const
 {
 	// TODO 3: return true only if x and y are within map limits
 	// and the tile is walkable (tile id 0 in the navigation layer)
+
+	//if (x > )
+
 	return true;
 }
 
